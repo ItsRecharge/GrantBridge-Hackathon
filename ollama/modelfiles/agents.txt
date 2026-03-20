@@ -1,0 +1,26 @@
+# College Aid Agents Summary
+
+## Created Agents:
+
+### 1. Profile Summarizer Agent (profile-summarizer-modelfile)
+- **Base Model**: mistral:7b (4.5GB RAM)
+- **Purpose**: Takes resume, GPA, activities, demographics → generates structured user profile
+- **Output**: Academic profile, experiences, demographics, strengths, and scholarship tags
+
+### 2. Scholarship Extractor Agent (scholarship-extractor-modelfile)  
+- **Base Model**: phi:2.7b (2GB RAM)
+- **Purpose**: Takes unstructured scholarship data → extracts requirements, deadlines, target student type
+- **Output**: JSON with requirements, deadlines, target profile, award details
+
+### 3. Match Scorer Agent (match-scorer-modelfile)
+- **Base Model**: llama2:7b (4GB RAM)  
+- **Purpose**: Takes profile + scholarship data → generates match score and recommendation
+- **Output**: 0-100 score, eligibility check, competitiveness assessment, apply priority
+
+## Total Memory Usage: ~10.5GB (fits in 16GB system)
+
+## Setup:
+Run: `./scripts/setup-agents.sh`
+
+## Documentation:
+See: `ollama/AGENTS_README.md` for full usage guide

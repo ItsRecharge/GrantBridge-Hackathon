@@ -1,0 +1,6 @@
+FAFSA PDF generation
+Profile summarizer--> DB --> scholarship match (list percentage)
+    - Add a file upload button or if we have time an essay upload and/or speak to it for stt and nlp (chill)
+    - make this a js popup
+
+For gathering the data,

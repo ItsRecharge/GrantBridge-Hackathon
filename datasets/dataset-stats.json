@@ -1,0 +1,24 @@
+{
+  "total_records": 1000,
+  "average_match_score": "20.29",
+  "match_score_distribution": {
+    "perfect": 0,
+    "excellent": 3,
+    "good": 27,
+    "fair": 139,
+    "poor": 831
+  },
+  "profiles": {
+    "avg_gpa": "3.03",
+    "avg_age": 21,
+    "genders": 3,
+    "ethnicities": 8,
+    "majors": 20,
+    "states": 15
+  },
+  "scholarships": {
+    "avg_amount": 24779,
+    "total_value": 24778747,
+    "providers": 15
+  }
+}
