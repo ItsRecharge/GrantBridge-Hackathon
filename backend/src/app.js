@@ -20,8 +20,14 @@ app.use(helmet());
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:3000')
   .split(',')
   .map(o => o.trim());
+const isProduction = String(process.env.NODE_ENV).toLowerCase() === 'production';
 app.use(cors({
   origin: (origin, callback) => {
+    if (!isProduction) {
+      callback(null, true);
+      return;
+    }
+
     // Allow requests with no origin (e.g. mobile apps, curl)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);

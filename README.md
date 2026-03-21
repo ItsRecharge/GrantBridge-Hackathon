@@ -92,7 +92,7 @@ npm run start:all
 
 6. **Access the app**
 - Frontend: http://localhost:3000
-- Backend: http://localhost:5000
+- Backend: http://localhost:5001
 
 ## Available Commands
 
@@ -210,7 +210,7 @@ SCRAPING_RATE_LIMIT_MS=2000
 
 ### Frontend (.env)
 ```bash
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:5001/api
 ```
 
 ## Development

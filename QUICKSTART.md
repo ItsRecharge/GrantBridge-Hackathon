@@ -35,7 +35,7 @@ All three options will:
 | Service | Port | Purpose |
 |---------|------|---------|
 | Frontend | 3000 | React app - http://localhost:3000 |
-| Backend | 5000 | API server - http://localhost:5000 |
+| Backend | 5001 | API server - http://localhost:5001 |
 | PostgreSQL | 5432 | Database (Docker) |
 | Redis | 6379 | Cache & job queue (Docker) |
 
@@ -126,11 +126,11 @@ divergent-college/
 ## 🐛 Troubleshooting
 
 ### Port Already in Use
-If port 3000 or 5000 is in use:
+If port 3000 or 5001 is in use:
 ```bash
 # Kill process on port
 kill -9 $(lsof -ti:3000)  # Frontend
-kill -9 $(lsof -ti:5000)  # Backend
+kill -9 $(lsof -ti:5001)  # Backend
 ```
 
 ### Docker Issues
@@ -153,7 +153,7 @@ npm install
 npm run docker:logs
 
 # Check backend
-curl http://localhost:5000/health
+curl http://localhost:5001/health
 
 # Check frontend
 curl http://localhost:3000
@@ -164,7 +164,7 @@ curl http://localhost:3000
 ## ✅ Testing the Setup
 
 1. **Frontend works**: Visit http://localhost:3000
-2. **Backend works**: Visit http://localhost:5000/health (should return `{"status":"OK"}`)
+2. **Backend works**: Visit http://localhost:5001/health (should return `{"status":"OK"}`)
 3. **Try signup**: Create an account on the app
 4. **Try login**: Sign in with your credentials
 

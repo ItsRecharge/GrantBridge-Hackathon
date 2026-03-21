@@ -28,7 +28,7 @@ const envFiles = [
     source: 'frontend/.env.example',
     target: 'frontend/.env',
     defaults: {
-      VITE_API_URL: 'http://localhost:5000/api',
+      VITE_API_URL: 'http://localhost:5001/api',
     },
   },
 ];

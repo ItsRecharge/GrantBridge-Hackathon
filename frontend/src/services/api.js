@@ -1,6 +1,34 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const resolveApiUrl = () => {
+  if (typeof window !== 'undefined') {
+    const { protocol, hostname } = window.location;
+    const configuredApiUrl = import.meta.env.VITE_API_URL;
+
+    if (configuredApiUrl) {
+      const isRemoteHost = hostname && hostname !== 'localhost' && hostname !== '127.0.0.1';
+      const pointsToLocalhost = configuredApiUrl.includes('localhost') || configuredApiUrl.includes('127.0.0.1');
+
+      if (isRemoteHost && pointsToLocalhost) {
+        return `${protocol}//${hostname}:5001/api`;
+      }
+
+      return configuredApiUrl;
+    }
+
+    if (hostname && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+      return `${protocol}//${hostname}:5001/api`;
+    }
+  }
+
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+
+  return '/api';
+};
+
+export const API_URL = resolveApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,
