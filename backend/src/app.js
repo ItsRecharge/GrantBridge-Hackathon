@@ -17,7 +17,7 @@ const app = express();
 
 // Middleware
 app.use(helmet());
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:3000')
+const allowedOrigins = (process.env.CLIENT_URL || 'http://145.132.97.45:3000')
   .split(',')
   .map(o => o.trim());
 const isProduction = String(process.env.NODE_ENV).toLowerCase() === 'production';

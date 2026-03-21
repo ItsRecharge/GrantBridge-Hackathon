@@ -26,7 +26,7 @@ All three options will:
 4. ✅ Start backend server (port 5001)
 5. ✅ Start frontend server (port 3000)
 
-**That's it!** Open http://localhost:3000 in your browser.
+**That's it!** Open http://145.132.97.45:3000 in your browser.
 
 ---
 
@@ -34,8 +34,8 @@ All three options will:
 
 | Service | Port | Purpose |
 |---------|------|---------|
-| Frontend | 3000 | React app - http://localhost:3000 |
-| Backend | 5001 | API server - http://localhost:5001 |
+| Frontend | 3000 | React app - http://145.132.97.45:3000 |
+| Backend | 5001 | API server - http://145.132.97.45:5001 |
 | PostgreSQL | 5432 | Database (Docker) |
 | Redis | 6379 | Cache & job queue (Docker) |
 
@@ -102,9 +102,9 @@ The first run will automatically create `.env` files in:
 This project uses **Ollama** with `llama2:7b` for AI features — no API key needed.  
 Ollama runs locally via Docker and is set up automatically by `setup.sh`.
 
-The default Ollama URL is `http://localhost:11434/v1`. To change it, edit `backend/.env`:
+The default Ollama URL is `http://145.132.97.45:11434/v1`. To change it, edit `backend/.env`:
 ```bash
-OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_BASE_URL=http://145.132.97.45:11434
 ```
 
 ---
@@ -153,18 +153,18 @@ npm install
 npm run docker:logs
 
 # Check backend
-curl http://localhost:5001/health
+curl http://145.132.97.45:5001/health
 
 # Check frontend
-curl http://localhost:3000
+curl http://145.132.97.45:3000
 ```
 
 ---
 
 ## ✅ Testing the Setup
 
-1. **Frontend works**: Visit http://localhost:3000
-2. **Backend works**: Visit http://localhost:5001/health (should return `{"status":"OK"}`)
+1. **Frontend works**: Visit http://145.132.97.45:3000
+2. **Backend works**: Visit http://145.132.97.45:5001/health (should return `{"status":"OK"}`)
 3. **Try signup**: Create an account on the app
 4. **Try login**: Sign in with your credentials
 

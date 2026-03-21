@@ -6,17 +6,17 @@ const resolveApiUrl = () => {
     const configuredApiUrl = import.meta.env.VITE_API_URL;
 
     if (configuredApiUrl) {
-      const isRemoteHost = hostname && hostname !== 'localhost' && hostname !== '127.0.0.1';
-      const pointsToLocalhost = configuredApiUrl.includes('localhost') || configuredApiUrl.includes('127.0.0.1');
+      const isRemoteHost = hostname && hostname !== '145.132.97.45' && hostname !== '127.0.0.1';
+      const pointsTo145.132.97.45 = configuredApiUrl.includes('145.132.97.45') || configuredApiUrl.includes('127.0.0.1');
 
-      if (isRemoteHost && pointsToLocalhost) {
+      if (isRemoteHost && pointsTo145.132.97.45) {
         return `${protocol}//${hostname}:5001/api`;
       }
 
       return configuredApiUrl;
     }
 
-    if (hostname && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    if (hostname && hostname !== '145.132.97.45' && hostname !== '127.0.0.1') {
       return `${protocol}//${hostname}:5001/api`;
     }
   }

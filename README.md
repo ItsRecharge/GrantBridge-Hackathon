@@ -54,7 +54,7 @@ This will:
 - Start PostgreSQL and Redis containers
 - Start both backend (port 5001) and frontend (port 3000) servers
 
-Then visit **http://localhost:3000** 🎉
+Then visit **http://145.132.97.45:3000** 🎉
 
 ## Manual Setup (If Needed)
 
@@ -91,8 +91,8 @@ npm run start:all
 ```
 
 6. **Access the app**
-- Frontend: http://localhost:3000
-- Backend: http://localhost:5001
+- Frontend: http://145.132.97.45:3000
+- Backend: http://145.132.97.45:5001
 
 ## Available Commands
 
@@ -191,15 +191,15 @@ divergent-college/
 ```bash
 NODE_ENV=development
 PORT=5000
-CLIENT_URL=http://localhost:3000
+CLIENT_URL=http://145.132.97.45:3000
 
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/divergent_college
-REDIS_URL=redis://localhost:6379
+DATABASE_URL=postgresql://postgres:postgres@145.132.97.45:5432/divergent_college
+REDIS_URL=redis://145.132.97.45:6379
 
 JWT_SECRET=your-secret-key-change-in-production
 JWT_EXPIRES_IN=7d
 
-OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_BASE_URL=http://145.132.97.45:11434
 
 PUPPETEER_HEADLESS=true
 PUPPETEER_TIMEOUT=30000
@@ -210,7 +210,7 @@ SCRAPING_RATE_LIMIT_MS=2000
 
 ### Frontend (.env)
 ```bash
-VITE_API_URL=http://localhost:5001/api
+VITE_API_URL=http://145.132.97.45:5001/api
 ```
 
 ## Development

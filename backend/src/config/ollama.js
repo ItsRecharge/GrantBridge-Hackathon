@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://145.132.97.45:11434';
 
 /**
  * Send a chat completion request to Ollama's native API

@@ -12,12 +12,12 @@ const envFiles = [
     defaults: {
       NODE_ENV: 'development',
       PORT: '5000',
-      CLIENT_URL: 'http://localhost:3000',
-      DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/divergent_college',
-      REDIS_URL: 'redis://localhost:6379',
+      CLIENT_URL: 'http://145.132.97.45:3000',
+      DATABASE_URL: 'postgresql://postgres:postgres@145.132.97.45:5432/divergent_college',
+      REDIS_URL: 'redis://145.132.97.45:6379',
       JWT_SECRET: 'dev-secret-key-change-in-production-' + Math.random().toString(36).substring(7),
       JWT_EXPIRES_IN: '7d',
-      OLLAMA_BASE_URL: 'http://localhost:11434',
+      OLLAMA_BASE_URL: 'http://145.132.97.45:11434',
       PUPPETEER_HEADLESS: 'true',
       PUPPETEER_TIMEOUT: '30000',
       SCRAPING_MAX_SCHOLARSHIPS: '100',
@@ -28,7 +28,7 @@ const envFiles = [
     source: 'frontend/.env.example',
     target: 'frontend/.env',
     defaults: {
-      VITE_API_URL: 'http://localhost:5001/api',
+      VITE_API_URL: 'http://145.132.97.45:5001/api',
     },
   },
 ];
@@ -74,4 +74,4 @@ for (const envFile of envFiles) {
 
 console.log('\n✓ Environment setup complete!');
 console.log('\nNote: Update the following in your .env files:');
-console.log('  - OLLAMA_BASE_URL: Defaults to http://localhost:11434');
+console.log('  - OLLAMA_BASE_URL: Defaults to http://145.132.97.45:11434');

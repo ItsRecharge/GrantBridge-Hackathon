@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOTAL_SAMPLES = 1000;
 const BATCH_SIZE = 1; // Process one at a time for quality control
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://145.132.97.45:11434';
 const USE_OPENAI = !!OPENAI_API_KEY;
 
 // Output file

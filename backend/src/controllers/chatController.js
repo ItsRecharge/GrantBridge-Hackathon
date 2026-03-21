@@ -1,7 +1,7 @@
 import axios from 'axios';
 import logger from '../utils/logger.js';
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://145.132.97.45:11434';
 const SCHOLARSHIP_CHAT_MODEL = process.env.SCHOLARSHIP_CHAT_MODEL || 'llama2:7b';
 const SYSTEM_PROMPT = 'You are a terse scholarship advisor. Obey the user request, stay on-topic, and keep answers to <=3 short bullets (under 60 words total). No filler, no stories, no repeated intros. If you lack key info, ask one concise clarifying question instead of guessing. If off-topic, give one brief line then redirect back to scholarships/financial aid.';
 

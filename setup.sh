@@ -131,9 +131,9 @@ echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "${BLUE}  Application is starting...${NC}"
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
 
-echo -e "${GREEN}Frontend:${NC} http://localhost:3000"
-echo -e "${GREEN}Backend:${NC}  http://localhost:5001"
-echo -e "${GREEN}API:${NC}      http://localhost:5001/api\n"
+echo -e "${GREEN}Frontend:${NC} http://145.132.97.45:3000"
+echo -e "${GREEN}Backend:${NC}  http://145.132.97.45:5001"
+echo -e "${GREEN}API:${NC}      http://145.132.97.45:5001/api\n"
 
 echo -e "${YELLOW}To stop the application, run:${NC}"
 echo -e "  npm run docker:down\n"
