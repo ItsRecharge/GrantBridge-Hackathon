@@ -37,7 +37,8 @@ const KNOWN_COLLEGES = [
 
 export const searchColleges = async (req, res, next) => {
   try {
-    const { query, state, type, page = 1, limit = 10 } = req.query;
+    const { query, state, type, page = 1, limit = 10, useAI } = req.query;
+    const shouldUseAI = String(useAI).toLowerCase() === 'true';
 
     // Always search database first
     const where = {};
@@ -53,6 +54,28 @@ export const searchColleges = async (req, res, next) => {
       limit: parseInt(limit),
       order: [['name', 'ASC']],
     });
+
+    // If AI search is explicitly requested, try AI first
+    if (shouldUseAI && query) {
+      try {
+        logger.info(`AI-first college search requested for "${query}"`);
+        const aiResults = await searchCollegesAI(query, parseInt(limit));
+
+        if (aiResults.length > 0) {
+          return res.json({
+            colleges: aiResults,
+            total: aiResults.length,
+            page: 1,
+            limit: parseInt(limit),
+            pages: 1,
+            source: 'ai-search',
+            message: `Found ${aiResults.length} colleges via AI search.`,
+          });
+        }
+      } catch (error) {
+        logger.warn('AI-first college search failed, falling back to database:', error.message);
+      }
+    }
 
     // If results found in database, return them
     if (count > 0) {

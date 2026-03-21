@@ -52,7 +52,7 @@ This will:
 - Install all dependencies
 - Create `.env` files automatically
 - Start PostgreSQL and Redis containers
-- Start both backend (port 5000) and frontend (port 3000) servers
+- Start both backend (port 5001) and frontend (port 3000) servers
 
 Then visit **http://localhost:3000** 🎉
 

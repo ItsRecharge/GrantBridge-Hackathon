@@ -23,7 +23,7 @@ All three options will:
 1. ✅ Install all dependencies
 2. ✅ Create `.env` files with sensible defaults
 3. ✅ Start PostgreSQL & Redis (Docker)
-4. ✅ Start backend server (port 5000)
+4. ✅ Start backend server (port 5001)
 5. ✅ Start frontend server (port 3000)
 
 **That's it!** Open http://localhost:3000 in your browser.
