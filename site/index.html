@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GrantBridge — Documentation</title>
+<meta name="description" content="Documentation for GrantBridge: an AI-powered financial aid and scholarship finder. Startup guide, screenshots, API reference, FAQ, and debugging.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%93%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --sky:#F6F8FE; --white:#FFFFFF; --ink:#101A3A; --dim:#5A6685;
+  --blue:#2447F0; --blue-deep:#1733B8; --blue-wash:#E7ECFE; --amber:#F5A623; --mint:#18A970;
+  --edge:#DFE5F4; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{background:var(--sky);color:var(--ink);font:16px/1.65 "Inter",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:"Sora",sans-serif;line-height:1.18;letter-spacing:-.015em}
+a{color:var(--blue)}
+img{max-width:100%;height:auto;display:block}
+code{font-family:var(--mono);font-size:.84em;background:var(--blue-wash);border:1px solid var(--edge);border-radius:4px;padding:.1em .35em;color:#1B2C7A}
+pre{background:#0F1836;color:#DBE4FB;border-radius:10px;padding:1rem 1.25rem;overflow-x:auto;margin:1rem 0;font-size:.85rem;line-height:1.6}
+pre code{background:none;border:none;padding:0;font-size:1em;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* bridge-arc divider */
+.bridge{height:70px;position:relative;overflow:hidden}
+.bridge svg{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(720px,92%);height:60px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--edge)}
+nav .wrap{display:flex;align-items:center;gap:1.4rem;height:60px}
+.brand{font-family:"Sora",sans-serif;font-weight:800;font-size:1.05rem;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand span{color:var(--blue)}
+nav ul{display:flex;gap:1.15rem;list-style:none;margin-left:auto;overflow-x:auto;min-width:0}
+nav ul a{color:var(--dim);text-decoration:none;font-size:.85rem;font-weight:600;white-space:nowrap;padding:.35rem 0;border-bottom:2px solid transparent}
+nav ul a:hover{color:var(--blue);border-bottom-color:var(--amber)}
+
+/* hero */
+header{background:linear-gradient(160deg,var(--blue) 0%,var(--blue-deep) 90%);color:#fff;position:relative}
+.hero{padding:4.6rem 0 4.6rem;text-align:center;position:relative}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#DBE4FB;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:.34rem .95rem;background:rgba(255,255,255,.08)}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;margin:1.1rem auto .7rem;max-width:800px;color:#fff}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero .tagline{max-width:640px;margin:0 auto;color:#C9D6FA;font-size:1.08rem}
+.cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-top:1.8rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:10px;padding:.75rem 1.5rem;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:#fff;color:var(--blue-deep);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+.hero-shot{max-width:920px;margin:3rem auto -6.5rem;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.25);box-shadow:0 30px 90px rgba(9,18,60,.45);position:relative;z-index:2}
+.hero-shot img{width:100%}
+.hero-spacer{height:7.5rem}
+
+/* sections */
+section{padding:4.2rem 0}
+.sec-head{max-width:660px;margin-bottom:2.2rem}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:600}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:700;margin:.4rem 0 .55rem}
+.sec-head p{color:var(--dim)}
+.alt{background:var(--white);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)}
+
+/* features */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem}
+.card{background:var(--white);border:1px solid var(--edge);border-radius:14px;padding:1.4rem 1.45rem;min-width:0;box-shadow:0 2px 10px rgba(16,26,58,.04)}
+.alt .card{background:var(--sky)}
+.card h3{font-size:1.02rem;margin-bottom:.45rem}
+.card p{font-size:.92rem;color:var(--dim)}
+.card .glyph{width:36px;height:36px;border-radius:10px;background:var(--blue-wash);display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;color:var(--blue)}
+
+/* gallery */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem}
+figure.shot{background:var(--white);border:1px solid var(--edge);border-radius:14px;overflow:hidden;min-width:0;box-shadow:0 2px 10px rgba(16,26,58,.05)}
+figure.shot img{width:100%;aspect-ratio:1440/900;object-fit:cover;object-position:top;border-bottom:1px solid var(--edge)}
+figure.shot figcaption{padding:.8rem 1rem;font-size:.83rem;color:var(--dim)}
+figure.shot figcaption strong{color:var(--ink);display:block;font-size:.88rem}
+figure.wide{grid-column:1/-1}
+.shot-note{font-size:.82rem;color:var(--dim);margin-top:1rem}
+
+/* steps */
+.steps{display:grid;gap:1rem;max-width:840px}
+.step{background:var(--white);border:1px solid var(--edge);border-radius:14px;padding:1.3rem 1.4rem 1.3rem 4.4rem;position:relative;min-width:0}
+.step .n{position:absolute;left:1.15rem;top:1.25rem;width:2.05rem;height:2.05rem;border-radius:50%;background:var(--blue);color:#fff;font-family:"Sora",sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.step h3{font-size:1rem;margin-bottom:.4rem}
+.step p{font-size:.92rem;color:var(--dim)}
+.step pre{margin:.7rem 0 0}
+
+/* docs */
+.doc-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem}
+@media(max-width:840px){.doc-cols{grid-template-columns:1fr}}
+.doc-block{min-width:0}
+.doc-block h3{font-size:1.05rem;margin:1.7rem 0 .6rem;color:var(--blue-deep)}
+.doc-block h3:first-child{margin-top:0}
+.doc-block p,.doc-block li{font-size:.93rem;color:var(--dim)}
+.doc-block ul{padding-left:1.2rem;display:grid;gap:.4rem}
+.doc-block li strong,.doc-block p strong{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:.87rem;margin:.8rem 0}
+th{text-align:left;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);border-bottom:2px solid var(--edge);padding:.5rem .6rem}
+td{border-bottom:1px solid var(--edge);padding:.5rem .6rem;color:var(--dim);vertical-align:top}
+.table-scroll{overflow-x:auto}
+.method{font-family:var(--mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:.08rem .4rem;white-space:nowrap}
+.get{background:#E3F5EC;color:#0F7A4D}.post{background:#E7ECFE;color:#1733B8}
+
+/* FAQ / debug */
+details{background:var(--white);border:1px solid var(--edge);border-radius:12px;margin-bottom:.7rem;overflow:hidden}
+.alt details{background:var(--sky)}
+summary{cursor:pointer;padding:1rem 1.25rem;font-weight:600;font-size:.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:"Sora",sans-serif;font-size:1.25rem;color:var(--blue);flex-shrink:0}
+details[open] summary::after{content:"–"}
+details .body{padding:0 1.25rem 1.1rem;font-size:.92rem;color:var(--dim)}
+details .body p{margin-bottom:.6rem}
+details .body p:last-child{margin-bottom:0}
+.debug summary{font-family:var(--mono);font-size:.84rem;font-weight:500}
+.debug summary .sym{color:#D6303F;font-weight:700}
+.fix-label{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:var(--mint);border-radius:4px;padding:.15rem .5rem;margin:.2rem 0 .4rem}
+
+footer{background:var(--blue-deep);color:#C9D6FA;padding:2.5rem 0;text-align:center;font-size:.85rem}
+footer a{color:#fff}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Grant<span>Bridge</span></a>
+    <ul>
+      <li><a href="#screens">Screenshots</a></li>
+      <li><a href="#start">Startup guide</a></li>
+      <li><a href="#docs">Documentation</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#debug">Debugging</a></li>
+      <li><a href="https://github.com/ItsRecharge/GrantBridge-Hackathon">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero">
+    <span class="pill">Hackathon build · AI-powered · Runs fully local</span>
+    <h1>Your bridge to college funding <em>that fits.</em></h1>
+    <p class="tagline">GrantBridge matches students with scholarships, estimates financial aid,
+    walks the FAFSA line by line, and auto-fills college forms with a locally-run Llama&nbsp;2 —
+    no API keys, no data leaving your machine.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#start">Get it running</a>
+      <a class="btn btn-ghost" href="https://github.com/ItsRecharge/GrantBridge-Hackathon">View source on GitHub</a>
+    </div>
+    <div class="hero-shot">
+      <img src="img/swipe.png" alt="Discover Scholarships: swipeable scholarship card with an 88% fit score, award amount, deadline, and tag filters" width="1440" height="900" fetchpriority="high">
+    </div>
+  </div>
+</header>
+<div class="hero-spacer"></div>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">What it does</span>
+      <h2>Everything you need to fund your future</h2>
+      <p>A full-stack React + Express app: PostgreSQL and Redis in Docker, Ollama running Llama&nbsp;2 locally, and Puppeteer doing the form-filling gruntwork.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 9l6-6M10 15l-6 6M21 3l-7.5 7.5M3 21l7.5-7.5"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Swipe-to-match scholarships</h3>
+        <p>A Tinder-style feed scored against your profile — swipe right to save, left to pass, with fit percentages, tag filters, amount ranges, and an undo.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2l9 4.9V17L12 22l-9-5V6.9L12 2z"/><path d="M12 22V12M21 6.9L12 12 3 6.9"/></svg></div>
+        <h3>AI form filling, fully local</h3>
+        <p>Llama 2 (7B) via Ollama reads your profile and fills college financial-aid forms through Puppeteer. No OpenAI key, no cloud — the model runs on your machine.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2zm0 0a2 2 0 0 1 2-2h13"/></svg></div>
+        <h3>FAFSA Helper</h3>
+        <p>A guided, section-by-section walkthrough of the real FAFSA questions, pre-filled from your profile where possible, ending in a personalized answer sheet you take to fafsa.gov.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+        <h3>Education Hub</h3>
+        <p>In-depth guides on FAFSA, grants, loans, ROTC, jobs, and choosing the right school — plus "quick wins" distilled for students who just want the moves.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg></div>
+        <h3>Deadline calendar</h3>
+        <p>Saved scholarships lay out on a deadline calendar so applications get prioritized by due date — nothing slips through the cracks.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Background job processing</h3>
+        <p>Long-running work — aid estimates, scraping, AI runs — goes through BullMQ on Redis, so the UI stays responsive while jobs churn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bridge" role="presentation">
+  <svg viewBox="0 0 720 60" fill="none" aria-hidden="true" preserveAspectRatio="none">
+    <path d="M0 58 Q 360 -40 720 58" stroke="#2447F0" stroke-width="2.5" opacity=".55"/>
+    <path d="M60 58 V 34 M180 58 V 16 M360 58 V 7 M540 58 V 16 M660 58 V 34" stroke="#2447F0" stroke-width="1.5" opacity=".3"/>
+  </svg>
+</div>
+
+<section id="screens" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Screenshots</span>
+      <h2>A walk through the app</h2>
+      <p>Captured from the React frontend running locally. Scholarship listings shown are sample data.</p>
+    </div>
+    <div class="shots">
+      <figure class="shot wide"><img loading="lazy" src="img/home.png" alt="GrantBridge landing page: Your Bridge to College Funding That Fits" width="1440" height="900"><figcaption><strong>Landing page</strong>The public front door — sign in or get started.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/swipe.png" alt="Scholarship swipe view with fit score" width="1440" height="900"><figcaption><strong>Discover (swipe)</strong>Fit-scored cards; swipe right to save, left to pass, undo anytime.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/scholarships.png" alt="Scholarship browse view with tag and amount filters" width="1440" height="900"><figcaption><strong>Browse</strong>The same catalog as a filterable list — tags, amount range, pagination.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/fafsa.png" alt="FAFSA Helper guided form, student information section" width="1440" height="900"><figcaption><strong>FAFSA Helper</strong>Question-by-question guidance, pre-filled from your profile.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/education.png" alt="Education Hub with guides and quick wins" width="1440" height="900"><figcaption><strong>Education Hub</strong>Guides on FAFSA, grants, loans, ROTC, and college ROI.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/dashboard.png" alt="Dashboard with navigation cards" width="1440" height="900"><figcaption><strong>Dashboard</strong>Jumping-off point to scholarships, colleges, FAFSA, and saved items.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/saved.png" alt="Saved scholarships page" width="1440" height="900"><figcaption><strong>Saved scholarships</strong>Everything you swiped right on, organized by deadline.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/profile.png" alt="Profile page" width="1440" height="900"><figcaption><strong>Profile</strong>Academic + financial info that powers matching and form filling.</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="img/colleges.png" alt="Colleges page" width="1440" height="900"><figcaption><strong>Colleges</strong>Search colleges and request AI financial-aid estimates.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Startup guide</span>
+      <h2>One command, or step by step</h2>
+      <p>Prerequisites: <strong>Node.js 18+</strong> and <strong>Docker with Compose</strong>. For AI features, <strong>Ollama</strong> with the <code>llama2:7b</code> model.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span>
+        <h3>The fast path</h3>
+        <p>Any of the three does the same thing: install all dependencies, create <code>.env</code> files with sensible defaults, start PostgreSQL + Redis in Docker, then launch the backend (port 5001) and frontend (port 3000).</p>
+        <pre><code>./setup.sh          # option 1: shell script
+make setup          # option 2: make
+npm run dev         # option 3: npm</code></pre>
+      </div>
+      <div class="step"><span class="n">2</span>
+        <h3>Or run the pieces yourself</h3>
+        <pre><code>git clone https://github.com/ItsRecharge/GrantBridge-Hackathon
+cd GrantBridge-Hackathon
+docker-compose up -d        # PostgreSQL + Redis
+npm install
+npm run setup:env           # create .env files
+npm run start:all           # backend + frontend</code></pre>
+      </div>
+      <div class="step"><span class="n">3</span>
+        <h3>Pull the local AI model</h3>
+        <p>AI features use Ollama with Llama 2 — no API key. Install Ollama, then:</p>
+        <pre><code>ollama pull llama2:7b
+# backend reads OLLAMA_BASE_URL (default http://localhost:11434)</code></pre>
+      </div>
+      <div class="step"><span class="n">4</span>
+        <h3>Open the app and make an account</h3>
+        <p>Frontend at <code>http://localhost:3000</code>, backend health check at <code>http://localhost:5001/health</code> (returns <code>{"status":"OK"}</code>). Sign up, complete the multi-step profile, and start swiping.</p>
+      </div>
+      <div class="step"><span class="n">5</span>
+        <h3>Day-to-day commands</h3>
+        <pre><code>npm run docker:up / docker:down / docker:logs
+npm run start:backend       # backend only
+npm run start:frontend      # frontend only
+npm run build               # production build of both</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="docs" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Full documentation</span>
+      <h2>Under the hood</h2>
+    </div>
+    <div class="doc-cols">
+      <div class="doc-block">
+        <h3>Stack</h3>
+        <ul>
+          <li><strong>Frontend:</strong> React 18 + Vite, TailwindCSS + DaisyUI, React Router v6, Axios, React Hook Form, React Hot Toast</li>
+          <li><strong>Backend:</strong> Node.js + Express, Sequelize ORM on PostgreSQL, JWT auth, Redis caching</li>
+          <li><strong>AI:</strong> Ollama running Llama 2 (7B) locally</li>
+          <li><strong>Automation:</strong> Puppeteer for form analysis and filling</li>
+          <li><strong>Jobs:</strong> BullMQ on Redis for estimates and scraping</li>
+        </ul>
+
+        <h3>Architecture</h3>
+        <pre><code>GrantBridge/
+├── backend/src/
+│   ├── config/        DB, JWT, Ollama config
+│   ├── models/        Sequelize models
+│   ├── controllers/   route handlers
+│   ├── middleware/    auth, error handling
+│   ├── routes/        Express routes
+│   ├── services/      AI, scraping, caching
+│   └── migrations/    database migrations
+├── frontend/src/
+│   ├── pages/         route-level views
+│   ├── components/    auth, chat, college,
+│   │                  fafsa, scholarship, layout
+│   ├── context/       Auth + Profile providers
+│   └── services/      Axios API wrappers
+├── docker-compose.yml PostgreSQL + Redis
+└── ollama/            model tuning assets</code></pre>
+
+        <h3>How matching works</h3>
+        <p>Your profile (GPA, grade level, state, income band, interests, background) is compared against each scholarship's tags and criteria to produce the fit score shown on every card. Swipes feed back into recommendations; disliked items can be reset from the swipe screen.</p>
+
+        <h3>How AI form filling works</h3>
+        <p>A college's aid form is loaded in headless Chrome (Puppeteer), the field structure is extracted, and Llama 2 maps your profile values onto the fields. The run executes as a background job — <code>POST /api/colleges/estimate</code> returns a job id you poll for status.</p>
+      </div>
+
+      <div class="doc-block">
+        <h3>API reference</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>Endpoint</th><th>Purpose</th></tr>
+          <tr><td><span class="method post">POST</span> <code>/api/auth/signup</code></td><td>Register a new user</td></tr>
+          <tr><td><span class="method post">POST</span> <code>/api/auth/login</code></td><td>Log in, returns JWT</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/auth/me</code></td><td>Current user (auth)</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/profile</code></td><td>Get profile</td></tr>
+          <tr><td><span class="method post">POST</span> <code>/api/profile</code></td><td>Create / update profile</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/scholarships</code></td><td>Search with tags, amount, pagination</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/scholarships/feed</code></td><td>Swipe feed scored to the profile</td></tr>
+          <tr><td><span class="method post">POST</span> <code>/api/scholarships/swipe</code></td><td>Record a left/right swipe</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/scholarships/liked</code></td><td>Saved scholarships</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/scholarships/tags</code></td><td>Tag catalog, grouped by category</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/colleges</code></td><td>Search colleges</td></tr>
+          <tr><td><span class="method post">POST</span> <code>/api/colleges/estimate</code></td><td>Queue an AI aid estimate</td></tr>
+          <tr><td><span class="method get">GET</span> <code>/api/colleges/estimate/:jobId</code></td><td>Poll estimate status</td></tr>
+        </table>
+        </div>
+
+        <h3>Environment variables</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>Variable</th><th>Purpose</th></tr>
+          <tr><td><code>DATABASE_URL</code></td><td>PostgreSQL (Docker default works out of the box)</td></tr>
+          <tr><td><code>REDIS_URL</code></td><td>Redis for cache + BullMQ</td></tr>
+          <tr><td><code>JWT_SECRET</code>, <code>JWT_EXPIRES_IN</code></td><td>Auth token signing (change the secret in production)</td></tr>
+          <tr><td><code>OLLAMA_BASE_URL</code></td><td>Ollama endpoint (default <code>http://localhost:11434</code>)</td></tr>
+          <tr><td><code>PUPPETEER_HEADLESS</code>, <code>PUPPETEER_TIMEOUT</code></td><td>Browser automation behavior</td></tr>
+          <tr><td><code>VITE_API_URL</code></td><td>Frontend → backend base URL</td></tr>
+        </table>
+        </div>
+        <p><code>npm run setup:env</code> generates both <code>.env</code> files with working defaults for local development.</p>
+
+        <h3>Ports</h3>
+        <p>Frontend <strong>3000</strong> · Backend <strong>5001</strong> · PostgreSQL <strong>5432</strong> · Redis <strong>6379</strong> · Ollama <strong>11434</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">FAQ</span>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <details>
+      <summary>Do I need an OpenAI (or any) API key?</summary>
+      <div class="body"><p>No. All AI runs locally through Ollama with the Llama 2 7B model. Your profile and financial details never leave your machine for AI processing — which matters for an app handling income and FAFSA-adjacent data.</p></div>
+    </details>
+    <details>
+      <summary>How does the fit percentage on scholarship cards work?</summary>
+      <div class="body"><p>Each scholarship carries tags and criteria (field of study, background, activities, amounts, deadlines). The recommendation engine compares them against your profile to produce a match score, and your swipe history sharpens future recommendations.</p></div>
+    </details>
+    <details>
+      <summary>Does the FAFSA Helper submit my FAFSA?</summary>
+      <div class="body"><p>No — deliberately. It walks the real form's questions with plain-language guidance and produces a personalized answer sheet. You then fill the official form at fafsa.gov with your answers in hand. Sensitive fields like SSN stay local, and the generated PDF only ever shows the last 4 digits.</p></div>
+    </details>
+    <details>
+      <summary>Why Docker for Postgres and Redis but not the app?</summary>
+      <div class="body"><p>Hackathon pragmatism: the data services are one <code>docker-compose up</code> away, while the Node servers run directly on your machine for instant reload during development. <code>npm run dev</code> orchestrates all of it.</p></div>
+    </details>
+    <details>
+      <summary>Why is the AI slow the first time?</summary>
+      <div class="body"><p>Ollama loads the 7B model into memory on first request — expect a warm-up delay, then much faster responses. Estimate jobs also run through the BullMQ queue, so check job status rather than waiting on the request.</p></div>
+    </details>
+    <details>
+      <summary>Can I use a different model than llama2:7b?</summary>
+      <div class="body"><p>Yes — pull any Ollama model and update the model name in the backend's Ollama config. 7B is the balance point for running on a typical laptop; bigger models improve form-filling accuracy at the cost of RAM and speed. The repo's <code>ollamaTuning.ipynb</code> documents tuning experiments.</p></div>
+    </details>
+    <details>
+      <summary>Where does scholarship data come from?</summary>
+      <div class="body"><p>A Puppeteer-based scraper (rate-limited, capped via <code>SCRAPING_MAX_SCHOLARSHIPS</code>) plus seed datasets in <code>datasets/</code>. Tags are extracted at import time to power filtering and matching.</p></div>
+    </details>
+  </div>
+</section>
+
+<section id="debug" class="alt debug">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Debugging</span>
+      <h2>When the bridge wobbles</h2>
+      <p>Real issues and their fixes — the first one was found and fixed while building this site.</p>
+    </div>
+    <details>
+      <summary><span><span class="sym">✗</span> Frontend is a blank white page / build fails in <code>api.js</code></span></summary>
+      <div class="body">
+        <span class="fix-label">Fixed in repo</span>
+        <p>A find-and-replace of "localhost" with a machine IP once mangled the identifier <code>pointsToLocalhost</code> in <code>frontend/src/services/api.js</code> into invalid JavaScript, so Vite served a module with a syntax error and React never mounted. This is fixed on main — if you see <em>"Missing initializer in const declaration"</em>, pull the latest.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> Port 3000 or 5001 already in use</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <pre><code>kill -9 $(lsof -ti:3000)   # frontend (macOS/Linux)
+kill -9 $(lsof -ti:5001)   # backend</code></pre>
+        <p>On Windows: <code>Get-NetTCPConnection -LocalPort 3000</code> → <code>Stop-Process -Id &lt;pid&gt;</code>.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> Backend can't reach Postgres or Redis</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <p>Make sure the containers are up: <code>npm run docker:up</code>, then <code>npm run docker:logs</code> to watch them come healthy. A quick full reset is <code>npm run docker:down &amp;&amp; npm run docker:up</code>. Confirm the backend with <code>curl http://localhost:5001/health</code>.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> AI features fail or hang</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <p>Check Ollama is running (<code>ollama list</code> should show <code>llama2:7b</code>; pull it if missing) and that <code>OLLAMA_BASE_URL</code> in <code>backend/.env</code> points at it (default <code>http://localhost:11434</code>). First request after a restart is slow while the model loads.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> Login/signup succeeds but protected pages bounce back</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <p>Auth state lives in <code>localStorage</code> (<code>token</code> + <code>user</code>). If the backend restarted with a new <code>JWT_SECRET</code>, old tokens fail verification — log out and back in, or clear the two keys in devtools. Also check the frontend's <code>VITE_API_URL</code> matches where the backend actually listens (5001).</p>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> Dependencies won't install cleanly</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <pre><code>rm -rf node_modules backend/node_modules frontend/node_modules
+npm install</code></pre>
+      </div>
+    </details>
+    <details>
+      <summary><span><span class="sym">✗</span> Puppeteer estimate jobs time out</span></summary>
+      <div class="body">
+        <span class="fix-label">Fix</span>
+        <p>Raise <code>PUPPETEER_TIMEOUT</code> (default 30000 ms) in <code>backend/.env</code> — college sites can be slow. Set <code>PUPPETEER_HEADLESS=false</code> locally to watch the browser and see exactly where a form gets stuck.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="bridge" role="presentation">
+  <svg viewBox="0 0 720 60" fill="none" aria-hidden="true" preserveAspectRatio="none">
+    <path d="M0 58 Q 360 -40 720 58" stroke="#2447F0" stroke-width="2.5" opacity=".55"/>
+    <path d="M60 58 V 34 M180 58 V 16 M360 58 V 7 M540 58 V 16 M660 58 V 34" stroke="#2447F0" stroke-width="1.5" opacity=".3"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:#fff">GrantBridge</strong> — focus on getting in, not the paperwork.</p>
+    <p style="margin-top:.5rem"><a href="https://github.com/ItsRecharge/GrantBridge-Hackathon">Source on GitHub</a> · React + Express · PostgreSQL · Redis · Ollama/Llama 2</p>
+  </div>
+</footer>
+
+</body>
+</html>
