@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GrantBridge — Interactive Demo</title>
+<meta name="description" content="Interactive demo of GrantBridge with example data. Nothing is saved.">
+<style>
+:root{
+  --blue:#2F63E8; --blue-dark:#1F49BC; --blue-soft:#E8EFFD; --ink:#111827; --muted:#6B7280;
+  --bg:#F7F9FC; --card:#FFFFFF; --line:#E5E7EB; --green:#16A34A; --green-soft:#EAF9F0;
+  --red:#DC2626; --amber:#D97706;
+}
+*{box-sizing:border-box;margin:0}
+html{overflow-x:clip}
+body{font:16px/1.55 -apple-system,"Segoe UI",Roboto,Inter,sans-serif;background:var(--bg);color:var(--ink);min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+button{font:inherit;cursor:pointer}
+a{color:var(--blue)}
+.demo-banner{background:#0F1D40;color:#DBE4F8;font-size:.85rem;padding:.55rem 1rem;display:flex;gap:.9rem;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center}
+.demo-banner strong{color:#8FB3FF;letter-spacing:.05em}
+.demo-banner a{color:#9EC1FF}
+/* topbar */
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.8rem 1.4rem;display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.topnav{display:flex;gap:.25rem;flex-wrap:wrap;flex:1}
+.topnav button{background:none;border:0;color:#374151;padding:.5rem .85rem;border-radius:8px;font-size:.93rem}
+.topnav button:hover{background:#F3F4F6}
+.topnav button.on{background:var(--blue-soft);color:var(--blue);font-weight:600}
+.who{color:var(--muted);font-size:.88rem}
+.page{max-width:1150px;width:100%;margin:0 auto;padding:2rem 1.3rem 3rem;flex:1}
+h1{font-size:1.8rem;letter-spacing:-.02em;margin-bottom:.2rem}
+.sub{color:var(--muted);margin-bottom:1.5rem}
+.card{background:var(--card);border-radius:14px;box-shadow:0 1px 3px rgba(17,24,39,.07);padding:1.3rem 1.5rem}
+/* layout: filters + deck */
+.split{display:grid;grid-template-columns:270px 1fr;gap:1.4rem;align-items:start}
+.split>*{min-width:0}
+h2{font-size:1.05rem;margin-bottom:.8rem}
+.f-group{font-size:.72rem;letter-spacing:.09em;color:var(--muted);text-transform:uppercase;margin:1rem 0 .4rem;font-weight:700}
+.chk{display:flex;gap:.55rem;align-items:center;padding:.22rem 0;font-size:.92rem;cursor:pointer}
+.chk input{width:auto}
+input,select{width:100%;border:1px solid #D1D5DB;border-radius:9px;padding:.55rem .7rem;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.btn{border:0;border-radius:9px;padding:.6rem 1.1rem;font-weight:600;font-size:.92rem}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{background:#F9FAFB}
+.btn-amber{background:#fff;color:var(--amber);border:1.5px solid #FCD34D}
+.stack{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem}
+/* swipe card */
+.deck-card{position:relative;transition:transform .35s ease,opacity .35s ease}
+.deck-card.out-l{transform:translateX(-120%) rotate(-8deg);opacity:0}
+.deck-card.out-r{transform:translateX(120%) rotate(8deg);opacity:0}
+.fit{position:absolute;top:1.2rem;right:1.3rem;background:var(--green);color:#fff;border-radius:12px;padding:.5rem .8rem;text-align:center;font-weight:800;font-size:1.15rem;line-height:1.1}
+.fit small{display:block;font-size:.68rem;font-weight:600}
+.deck-card h3{font-size:1.45rem;letter-spacing:-.02em;padding-right:5.5rem}
+.deck-card .by{color:var(--blue);font-size:.9rem;margin:.15rem 0 1rem}
+.amount{background:linear-gradient(90deg,var(--green-soft),var(--blue-soft));border:1px solid #BBE8CD;border-radius:11px;padding:.9rem 1.1rem;margin-bottom:1rem}
+.amount .lbl{font-size:.72rem;letter-spacing:.09em;color:#374151;font-weight:700}
+.amount .val{color:var(--green);font-size:1.7rem;font-weight:800}
+.meta-lbl{font-size:.72rem;letter-spacing:.09em;color:var(--muted);font-weight:700}
+.deadline{font-weight:700;margin-bottom:.9rem}
+.tags{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.9rem}
+.tag{background:var(--blue-soft);color:#1E40AF;font-size:.78rem;font-weight:600;border-radius:999px;padding:.25rem .7rem}
+.swipe-hint{text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:1.1rem;padding-top:.9rem}
+.deck-actions{display:flex;gap:1rem;justify-content:center;align-items:center;margin:1.3rem 0}
+.pass{width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid #FCA5A5;color:var(--red);font-size:1.4rem;font-weight:700}
+.pass:hover{background:#FEF2F2}
+.save{width:56px;height:56px;border-radius:12px;background:var(--blue);border:0;color:#fff;font-size:1.4rem}
+.save:hover{background:var(--blue-dark)}
+.viewsaved{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:.85rem;font-weight:600}
+.viewsaved:hover{background:#F9FAFB}
+.empty-deck{text-align:center;padding:3rem 1rem;color:var(--muted)}
+/* lists */
+.item{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.8rem 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.item:first-of-type{border-top:0}
+.item .t{font-weight:600}
+.item .d{color:var(--muted);font-size:.86rem}
+.money{color:var(--green);font-weight:700;white-space:nowrap}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:1.1rem;margin-bottom:1.4rem}
+.stat b{font-size:2rem;font-weight:800;display:block;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:.85rem}
+.unsave{background:none;border:0;color:var(--red);font-weight:600;font-size:.86rem}
+.hidden{display:none!important}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:1rem;background:#fff;border-top:1px solid var(--line)}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <span><strong>DEMO</strong> — interactive example with sample data. No account, nothing is saved.</span>
+  <a href="../">← Back to the docs</a>
+</div>
+
+<div class="topbar">
+  <span class="logo">GrantBridge</span>
+  <nav class="topnav" aria-label="Main navigation">
+    <button data-tab="dash">Dashboard</button>
+    <button data-tab="colleges">Colleges</button>
+    <button data-tab="swipe" class="on">Scholarships</button>
+    <button data-tab="saved">Saved</button>
+  </nav>
+  <span class="who">👤 student@example.com</span>
+</div>
+
+<main class="page">
+  <!-- Swipe -->
+  <section id="tab-swipe">
+    <h1>Discover Scholarships</h1>
+    <p class="sub">Swipe through scholarships and save the ones you like!</p>
+    <div class="split">
+      <aside class="card">
+        <h2>Filters</h2>
+        <p class="f-group">Field of study</p>
+        <label class="chk"><input type="checkbox" value="STEM" class="ftag">STEM</label>
+        <label class="chk"><input type="checkbox" value="Music" class="ftag">Music &amp; arts</label>
+        <label class="chk"><input type="checkbox" value="Education" class="ftag">Education</label>
+        <p class="f-group">Background</p>
+        <label class="chk"><input type="checkbox" value="First-gen" class="ftag">First-generation</label>
+        <label class="chk"><input type="checkbox" value="New England" class="ftag">New England</label>
+        <p class="f-group">Amount</p>
+        <input id="fMin" type="number" placeholder="Min" min="0" style="margin-bottom:.5rem">
+        <input id="fMax" type="number" placeholder="Max" min="0">
+        <div class="stack">
+          <button class="btn btn-primary" id="applyF">Apply Filters</button>
+          <button class="btn btn-ghost" id="clearF">Clear All</button>
+          <button class="btn btn-amber" id="resetPassed">Reset Passed</button>
+        </div>
+      </aside>
+
+      <div>
+        <div id="deck"></div>
+        <div class="deck-actions">
+          <button class="pass" id="passBtn" aria-label="Pass">✕</button>
+          <button class="btn btn-ghost" id="undoBtn">Undo</button>
+          <button class="save" id="saveBtn" aria-label="Save">✓</button>
+        </div>
+        <button class="viewsaved" id="viewSaved">View Saved (<span id="savedCount">0</span>)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="tab-dash" class="hidden">
+    <h1>Dashboard</h1>
+    <p class="sub">Your scholarship hunt at a glance.</p>
+    <div class="statgrid">
+      <div class="card stat"><b id="dSaved">0</b><span>Scholarships saved</span></div>
+      <div class="card stat"><b id="dTotal">$0</b><span>Total potential awards</span></div>
+      <div class="card stat"><b id="dNext">—</b><span>Next deadline</span></div>
+    </div>
+    <div class="card">
+      <h2>Upcoming deadlines</h2>
+      <div id="deadlineList"></div>
+    </div>
+  </section>
+
+  <!-- Colleges -->
+  <section id="tab-colleges" class="hidden">
+    <h1>Colleges</h1>
+    <p class="sub">Compare schools and estimated net cost after aid.</p>
+    <div class="card" style="margin-bottom:1.2rem">
+      <input id="collegeSearch" placeholder="Search colleges…" aria-label="Search colleges">
+    </div>
+    <div class="card"><div id="collegeList"></div></div>
+  </section>
+
+  <!-- Saved -->
+  <section id="tab-saved" class="hidden">
+    <h1>Saved scholarships</h1>
+    <p class="sub">Everything you swiped right on.</p>
+    <div class="card"><div id="savedList"></div></div>
+  </section>
+</main>
+
+<footer>Interactive demo with example data · <a href="../">GrantBridge documentation</a> · Made by Neel Bansal</footer>
+
+<script>
+const SCHOLARSHIPS = [
+  { id:1, name:'Bridge Builders STEM Scholarship', by:'Bridge Builders Foundation', amt:5000, due:'Nov 14, 2026', fit:88,
+    desc:'For first-generation students pursuing engineering or computer science degrees.', tags:['STEM','First-gen'] },
+  { id:2, name:'Community Harmony Music Award', by:'Harmony Arts Council', amt:2500, due:'Sep 30, 2026', fit:92,
+    desc:'Awarded to students who led or performed in a school or community music program.', tags:['Music'] },
+  { id:3, name:'Future Educators Grant', by:'Bay State Teaching Alliance', amt:3000, due:'Dec 4, 2026', fit:71,
+    desc:'Supports students planning a career in K-12 education.', tags:['Education'] },
+  { id:4, name:'New England Innovators Award', by:'NE Innovation Trust', amt:7500, due:'Jan 14, 2027', fit:84,
+    desc:'For students from New England with a portfolio of independent projects.', tags:['New England','STEM'] },
+  { id:5, name:'First Chair Instrumental Scholarship', by:'Winchester Music Boosters', amt:1500, due:'Oct 22, 2026', fit:95,
+    desc:'For section leaders and first-chair musicians continuing music in college.', tags:['Music','New England'] },
+  { id:6, name:'Code Forward Scholarship', by:'Code Forward', amt:10000, due:'Feb 1, 2027', fit:79,
+    desc:'For students who built software that helped their school or community.', tags:['STEM'] },
+];
+const COLLEGES = [
+  { name:'UMass Amherst', loc:'Amherst, MA', cost:'$18,400/yr est. net' },
+  { name:'Northeastern University', loc:'Boston, MA', cost:'$31,200/yr est. net' },
+  { name:'Worcester Polytechnic Institute', loc:'Worcester, MA', cost:'$34,900/yr est. net' },
+  { name:'University of Vermont', loc:'Burlington, VT', cost:'$22,700/yr est. net' },
+  { name:'Berklee College of Music', loc:'Boston, MA', cost:'$38,500/yr est. net' },
+];
+const state = { saved: [], passed: [], filters: { tags: [], min: null, max: null }, history: [] };
+const $ = s => document.querySelector(s);
+const money = n => '$' + n.toLocaleString('en-US');
+
+function deckPool(){
+  return SCHOLARSHIPS.filter(s =>
+    !state.saved.includes(s.id) && !state.passed.includes(s.id) &&
+    (state.filters.tags.length === 0 || state.filters.tags.some(t => s.tags.includes(t))) &&
+    (state.filters.min == null || s.amt >= state.filters.min) &&
+    (state.filters.max == null || s.amt <= state.filters.max));
+}
+function current(){ return deckPool()[0]; }
+
+function renderDeck(){
+  const s = current();
+  $('#deck').innerHTML = s ? `
+    <div class="card deck-card" id="topCard">
+      <span class="fit">${s.fit}%<small>Fit</small></span>
+      <h3>${s.name}</h3>
+      <p class="by">by ${s.by}</p>
+      <div class="amount"><span class="lbl">AWARD AMOUNT</span><br><span class="val">${money(s.amt)}</span></div>
+      <p class="meta-lbl">DEADLINE</p>
+      <p class="deadline">${s.due}</p>
+      <p>${s.desc}</p>
+      <div class="tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <p class="swipe-hint">✕ to pass · ✓ to save — the fit score comes from your profile</p>
+    </div>` : `
+    <div class="card empty-deck">
+      <p style="font-size:2rem">🎓</p>
+      <p style="font-weight:600;color:var(--ink);margin:.4rem 0">That’s the whole deck!</p>
+      <p>Adjust the filters or hit “Reset Passed” to review the ones you skipped.</p>
+    </div>`;
+  const pool = deckPool();
+  $('#passBtn').disabled = $('#saveBtn').disabled = !pool.length;
+  $('#undoBtn').disabled = !state.history.length;
+}
+function renderCounts(){
+  $('#savedCount').textContent = state.saved.length;
+  $('#dSaved').textContent = state.saved.length;
+  const savedObjs = SCHOLARSHIPS.filter(s => state.saved.includes(s.id));
+  $('#dTotal').textContent = money(savedObjs.reduce((t,s) => t + s.amt, 0));
+  const next = savedObjs.map(s => new Date(s.due)).sort((a,b) => a - b)[0];
+  $('#dNext').textContent = next ? next.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+  $('#deadlineList').innerHTML = savedObjs.length
+    ? savedObjs.sort((a,b) => new Date(a.due) - new Date(b.due)).map(s =>
+      `<div class="item"><div><div class="t">${s.name}</div><div class="d">Due ${s.due}</div></div><span class="money">${money(s.amt)}</span></div>`).join('')
+    : '<p class="d" style="color:var(--muted)">Save a few scholarships and their deadlines line up here.</p>';
+  $('#savedList').innerHTML = savedObjs.length
+    ? savedObjs.map(s =>
+      `<div class="item"><div><div class="t">${s.name}</div><div class="d">${s.by} · Due ${s.due}</div></div>
+       <span style="display:flex;gap:.9rem;align-items:center"><span class="money">${money(s.amt)}</span>
+       <button class="unsave" data-unsave="${s.id}">Remove</button></span></div>`).join('')
+    : '<p class="d" style="color:var(--muted)">Nothing saved yet — head to Scholarships and swipe right on a few.</p>';
+}
+function renderColleges(){
+  const q = $('#collegeSearch').value.trim().toLowerCase();
+  $('#collegeList').innerHTML = COLLEGES.filter(c => c.name.toLowerCase().includes(q)).map(c =>
+    `<div class="item"><div><div class="t">${c.name}</div><div class="d">${c.loc}</div></div><span class="money">${c.cost}</span></div>`).join('')
+    || '<p style="color:var(--muted)">No colleges match that search.</p>';
+}
+function renderAll(){ renderDeck(); renderCounts(); renderColleges(); }
+
+function swipe(dir){
+  const s = current();
+  if (!s) return;
+  const el = $('#topCard');
+  el.classList.add(dir === 'save' ? 'out-r' : 'out-l');
+  state.history.push({ id: s.id, dir });
+  (dir === 'save' ? state.saved : state.passed).push(s.id);
+  setTimeout(() => { renderDeck(); renderCounts(); }, 240);
+}
+$('#saveBtn').addEventListener('click', () => swipe('save'));
+$('#passBtn').addEventListener('click', () => swipe('pass'));
+$('#undoBtn').addEventListener('click', () => {
+  const last = state.history.pop();
+  if (!last) return;
+  state.saved = state.saved.filter(id => id !== last.id);
+  state.passed = state.passed.filter(id => id !== last.id);
+  renderAll();
+});
+$('#applyF').addEventListener('click', () => {
+  state.filters.tags = [...document.querySelectorAll('.ftag:checked')].map(c => c.value);
+  state.filters.min = $('#fMin').value ? +$('#fMin').value : null;
+  state.filters.max = $('#fMax').value ? +$('#fMax').value : null;
+  renderDeck();
+});
+$('#clearF').addEventListener('click', () => {
+  document.querySelectorAll('.ftag').forEach(c => c.checked = false);
+  $('#fMin').value = ''; $('#fMax').value = '';
+  state.filters = { tags: [], min: null, max: null };
+  renderDeck();
+});
+$('#resetPassed').addEventListener('click', () => { state.passed = []; renderDeck(); });
+$('#viewSaved').addEventListener('click', () => switchTab('saved'));
+$('#collegeSearch').addEventListener('input', renderColleges);
+document.addEventListener('click', e => {
+  if (e.target.dataset.unsave){
+    state.saved = state.saved.filter(id => id != e.target.dataset.unsave);
+    renderAll();
+  }
+});
+function switchTab(tab){
+  document.querySelectorAll('.topnav button').forEach(x => x.classList.toggle('on', x.dataset.tab === tab));
+  ['dash','colleges','swipe','saved'].forEach(t => $('#tab-'+t).classList.toggle('hidden', t !== tab));
+}
+document.querySelectorAll('.topnav button').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+renderAll();
+</script>
+</body>
+</html>
